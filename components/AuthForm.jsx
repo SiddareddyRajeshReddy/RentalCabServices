@@ -1,7 +1,9 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { Eye, EyeOff, Mail, Lock, User, Phone, CheckCircle, AlertCircle } from 'lucide-react';
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 function AuthForm() {
+    const navigate = useNavigate()
     const [isLogin, setIsLogin] = useState(true);
     const [formData, setFormData] = useState({
         email: '',
@@ -125,6 +127,7 @@ function AuthForm() {
                         'Content-Type': 'application/json',
                     },
                 });
+              console.log(response)
             }
             else{
                 const response = await axios.post('http://localhost:3000/AuthLogin', formData, {
@@ -132,8 +135,11 @@ function AuthForm() {
                         'Content-Type': 'application/json',
                     },
                 });
+                  if(response.status === 200){
+                    console.log('Login Successful')
+                    navigate('/dashboard')
+                }
             }
-            console.log(response)
         } catch (error) {
             console.error('Auth error:', error);
             setFormErrors({ submit: 'Something went wrong. Please try again.' });
@@ -147,6 +153,7 @@ function AuthForm() {
                 phone: ''
             });
             setShowSuccess(true)
+            setIsLogin(true)
         }
     }, [formData, validateForm, isLogin]);
 
@@ -185,20 +192,20 @@ function AuthForm() {
 
                     {/* Success Message */}
                     {showSuccess && (
-                        <div className='relative'>
-                            <div className="p-4 bg-green-50">
-                                <div className="flex items-center gap-3 text-green-800">
+                        <div className='fixed top-[20%] right-0 w-2xs h-[120px]'>
+                            <div className={`p-4 ${isLogin?'bg-green-50':'bg-red-200'} h-full flex justify-center`}>
+                                <div className={`flex items-center gap-3 ${isLogin?'bg-green-50':'bg-red-200'}`}>
                                     <CheckCircle className="w-5 h-5" />
                                     <span className="font-semibold">
                                         {isLogin ? 'Login successful!' : 'Account created successfully!'}
                                     </span>
                                 </div>
                             </div>
-                            <div className='sliding-animation bg-green-900 mar border-2 border-green-900 absolute bottom-0'>
+                            <div className={`sliding-animation  ${isLogin?'bg-green-900  border-green-900':'bg-red-900  border-red-900'} mar border-2 absolute bottom-0`}>
                             </div>
                         </div>
                     )}
-
+                    
                     {/* Toggle Header */}
                     <div className="flex relative">
                         <button

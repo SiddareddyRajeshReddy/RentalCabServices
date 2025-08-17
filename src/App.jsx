@@ -3,16 +3,17 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import Home from '../components/home'
+import Dashboard from '../components/dashboard'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 const router = createBrowserRouter([
     {
       path: "/",
       element: <Home />
     },
-    // {
-    //   path: "dashboard",
-    //   element: <Dashboard />
-    // }
+    {
+      path: "dashboard",
+      element: <Dashboard />
+    }
   ])
 function App() {
   return (
