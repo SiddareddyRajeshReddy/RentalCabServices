@@ -112,7 +112,7 @@ function ContactUs() {
     ];
 
     return (
-        <div className="flex justify-center w-full py-16 px-4 bg-gradient-to-br from-gray-50 to-white">
+        <div id="contact" className="flex justify-center w-full py-16 px-4 bg-gradient-to-br from-gray-50 to-white">
             <div className="flex flex-col lg:flex-row w-full max-w-7xl gap-12">
                 {/* Contact Info Section */}
                 <div className="w-full lg:w-1/2 space-y-8">

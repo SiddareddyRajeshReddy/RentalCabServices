@@ -26,17 +26,9 @@ const ThemedHeader = () => {
     }
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-red-50 via-pink-50 to-orange-50 overflow-hidden">
-            {/* Animated Background Elements */}
-            <div className="fixed inset-0 pointer-events-none">
-                <div className="absolute top-20 left-10 w-20 h-20 bg-red-200 rounded-full animate-bounce opacity-10"></div>
-                <div className="absolute bottom-32 right-16 w-16 h-16 bg-pink-200 rounded-full animate-pulse opacity-15"></div>
-                <div className="absolute top-1/3 right-1/4 w-12 h-12 bg-orange-200 rounded-full animate-ping opacity-10"></div>
-                <div className="absolute bottom-1/4 left-1/3 w-14 h-14 bg-red-300 rounded-full animate-bounce opacity-10" style={{animationDelay: '1s'}}></div>
-            </div>
-
+        <>
             {/* Header */}
-            <header className={`border-gray-200 px-4 py-3 fixed top-0 w-full z-50 transition-all duration-300 ${
+            <header className={`fixed border-gray-200 px-4 py-3 top-0 w-full z-40 transition-all duration-300 ${
                 scrollY > 50 ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-white/80 backdrop-blur-sm'
             }`}>
                 <div className="flex items-center justify-between">
@@ -103,7 +95,7 @@ const ThemedHeader = () => {
 
                             {/* Notifications Dropdown */}
                             {notifyOpener && (
-                                <div className="absolute right-0 mt-2 w-80 bg-white/95 backdrop-blur-md rounded-xl shadow-xl border border-red-100 z-50">
+                                <div className="absolute right-0 mt-2 w-80 bg-white/95 backdrop-blur-md rounded-xl shadow-xl border border-red-100 z-[60]">
                                     <div className="p-4 border-b border-gray-100">
                                         <h3 className="font-semibold text-gray-800">Notifications</h3>
                                     </div>
@@ -147,7 +139,7 @@ const ThemedHeader = () => {
 
                             {/* Profile Dropdown */}
                             {menuOpener && (
-                                <div className="absolute right-0 mt-2 w-48 bg-white/95 backdrop-blur-md rounded-xl shadow-xl border border-red-100 z-50">
+                                <div className="absolute right-0 mt-2 w-48 bg-white/95 backdrop-blur-md rounded-xl shadow-xl border border-red-100 z-[70]">
                                     <div className="p-3 border-b border-gray-100">
                                         <p className="font-medium text-gray-800">John Doe</p>
                                         <p className="text-sm text-gray-500">john@example.com</p>
@@ -196,17 +188,20 @@ const ThemedHeader = () => {
                     </button>
                 </div>
             </header>
+            
             {/* Click outside to close dropdowns */}
             {(menuOpener || notifyOpener) && (
                 <div
-                    className="fixed inset-0 z-40"
+                    className="fixed inset-0 z-50"
                     onClick={() => {
                         setMenuOpener(false)
                         setNotifyOpener(false)
                     }}
                 />
             )}
-        </div>
+            
+            <div className="h-30 md:h-16"></div>
+        </>
     )
 }
 
