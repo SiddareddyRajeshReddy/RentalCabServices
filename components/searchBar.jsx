@@ -36,7 +36,7 @@ const RideSearchBar = () => {
                             onClick={swapLocations}
                             className="p-3 rounded-full bg-red-500 text-white hover:bg-red-600 transition-colors"
                         >
-                            <ArrowUpDown className="w-3 h-3 lg:rotate-90 transition-all duration-800 ease-in-out" />
+                            <ArrowUpDown className="w-3 h-3 lg:rotate-270 transition-all duration-800 ease-in-out" />
                         </button>
                     </div>
 
@@ -64,7 +64,7 @@ const RideSearchBar = () => {
                 {/* Search Button */}
                 <button className="bg-gradient-to-r p-3 from-red-500 to-pink-500 text-white rounded-lg font-medium hover:from-red-600 hover:to-pink-600 transition-all flex items-center justify-center space-x-2">
                     <Search className="w-4 h-4" />
-                    <span>Search Rides</span>
+                    <span>Book Ride</span>
                 </button>
             </div>
         </div>

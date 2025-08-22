@@ -17,12 +17,14 @@ const ThemedHeader = () => {
 
     const toggleNotifications = () => {
         setNotifyOpener(!notifyOpener)
-        setMenuOpener(false)
+        if(menuOpener)
+            setMenuOpener(false)
     }
 
     const toggleMenu = () => {
         setMenuOpener(!menuOpener)
-        setNotifyOpener(false)
+        if(notifyOpener)
+            setNotifyOpener(false)
     }
 
     return (
