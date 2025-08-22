@@ -135,7 +135,9 @@ function AuthForm() {
                         'Content-Type': 'application/json',
                     },
                 });
-                  if(response.status === 200){
+                console.log(response.data)
+                  if(response.data.success){
+                    localStorage.setItem('token', response.data.token)
                     console.log('Login Successful')
                     navigate('/dashboard')
                 }

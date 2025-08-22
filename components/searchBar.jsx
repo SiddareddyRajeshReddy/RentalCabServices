@@ -27,7 +27,7 @@ const RideSearchBar = () => {
                         <input
                             type="text"
                             placeholder="From"
-                            className="w-full pl-8 pr-10 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                            className="w-full pl-8 pr-10 py-3 text-green-500 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
                         />
                     </div>
 
@@ -36,7 +36,7 @@ const RideSearchBar = () => {
                             onClick={swapLocations}
                             className="p-3 rounded-full bg-red-500 text-white hover:bg-red-600 transition-colors"
                         >
-                            <ArrowUpDown className="w-3 h-3 lg:rotate-270 transition-all duration-800 ease-in-out" />
+                            <ArrowUpDown className="w-3 h-3 lg:-rotate-270 transition-all duration-1000 ease-in-out" />
                         </button>
                     </div>
 
@@ -45,7 +45,7 @@ const RideSearchBar = () => {
                         <input
                             type="text"
                             placeholder="To"
-                            className="w-full pl-8 pr-4 py-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                            className="w-full pl-8 pr-4 py-3 border text-red-700 border-gray-200 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
                         />
                     </div>
                 </div>

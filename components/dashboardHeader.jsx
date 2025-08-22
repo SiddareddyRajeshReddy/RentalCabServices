@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react"
 import { Search, Bell, User, Menu, Settings, LogOut, ChevronDown } from 'lucide-react';
-
+import { useNavigate } from "react-router-dom";
 const ThemedHeader = () => {
     const [menuOpener, setMenuOpener] = useState(false)
     const [notifyOpener, setNotifyOpener] = useState(false)
     const [scrollY, setScrollY] = useState(0)
     const [dashboardMode, setDashboardMode] = useState('user')
-
+    const navigate = useNavigate()
     useEffect(() => {
         const handleScroll = () => {
             setScrollY(window.scrollY)
@@ -14,7 +14,11 @@ const ThemedHeader = () => {
         window.addEventListener('scroll', handleScroll)
         return () => window.removeEventListener('scroll', handleScroll)
     }, [])
-
+    const logOut = () =>{
+        console.log("hEY")
+        localStorage.removeItem("token")
+        navigate('/')
+    }
     const toggleNotifications = () => {
         setNotifyOpener(!notifyOpener)
         if(menuOpener)
@@ -159,7 +163,7 @@ const ThemedHeader = () => {
                                             Settings
                                         </button>
                                         <hr className="my-2" />
-                                        <button className="flex items-center w-full px-3 py-2 text-sm text-red-600 hover:bg-red-50">
+                                        <button onClick={logOut} className="flex items-center w-full px-3 py-2 text-sm text-red-600 hover:bg-red-50">
                                             <LogOut className="h-4 w-4 mr-3" />
                                             Sign out
                                         </button>
@@ -191,7 +195,7 @@ const ThemedHeader = () => {
                 </div>
             </header>
             
-            {/* Click outside to close dropdowns */}
+            {/* Click outside to close dropdowns
             {(menuOpener || notifyOpener) && (
                 <div
                     className="fixed inset-0 z-50"
@@ -201,8 +205,8 @@ const ThemedHeader = () => {
                     }}
                 />
             )}
-            
-            <div className="h-30 md:h-16"></div>
+             */}
+            <div className="h-30 md:h-20"></div>
         </>
     )
 }
