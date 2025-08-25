@@ -127,7 +127,7 @@ function AuthForm() {
                         'Content-Type': 'application/json',
                     },
                 });
-              console.log(response)
+              console.log(response.status)
             }
             else{
                 const response = await axios.post('http://localhost:3000/AuthLogin', formData, {

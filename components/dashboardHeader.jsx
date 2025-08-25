@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect,  useContext } from "react"
 import { Search, Bell, User, Menu, Settings, LogOut, ChevronDown } from 'lucide-react';
 import { useNavigate } from "react-router-dom";
+import { ThemeContext } from "../context/context";
 const ThemedHeader = () => {
     const [menuOpener, setMenuOpener] = useState(false)
     const [notifyOpener, setNotifyOpener] = useState(false)
     const [scrollY, setScrollY] = useState(0)
-    const [dashboardMode, setDashboardMode] = useState('user')
     const navigate = useNavigate()
+    const {dashboardMode, setDashboardMode} = useContext(ThemeContext)
     useEffect(() => {
         const handleScroll = () => {
             setScrollY(window.scrollY)
