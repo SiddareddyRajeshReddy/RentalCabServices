@@ -19,11 +19,9 @@ const Dashboard = () => {
             <ThemeContext.Provider value={{ dashboardMode, setDashboardMode }}>
                 <div className="min-h-screen bg-gradient-to-br from-red-50 via-pink-50 to-orange-50 overflow-hidden">
                     <ThemedHeader />
-              
-                    {dashboardMode === 'user' &&  <RideSearchBar /> }
-                    {dashboardMode === 'user' &&  <CabTypesComponent /> }
+                    {dashboardMode === 'user' && <RideSearchBar />}
+                    {dashboardMode === 'user' && <CabTypesComponent />}
                     {dashboardMode === 'driver' && <DriverRideRequestsComponent />}
-                   
                 </div>
             </ThemeContext.Provider>
         </>

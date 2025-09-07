@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User, Car, ArrowRight, ArrowLeft, FileText, CreditCard } from 'lucide-react';
 import axios from 'axios';
-
+import MultiDateCalendar from './calenderComponent';
 const DriverRideRequestsComponent = () => {
     const navigate = useNavigate();
     const [isDriver, setIsDriver] = useState(false);
@@ -26,7 +26,7 @@ const DriverRideRequestsComponent = () => {
                 // Sending token in Authorization header
                 const response = await axios.post("http://localhost:3000/driver/DriverValidate", {}, {
                     headers: {
-                        'Authorization': `Bearer ${token}`,
+                        'Authorization': `${token}`,
                         'Content-Type': 'application/json',
                     }
                 });
@@ -246,6 +246,9 @@ const DriverRideRequestsComponent = () => {
                     <p className="text-green-600 text-sm mt-1">
                         You're now registered as a driver. Start accepting ride requests!
                     </p>
+                </div>
+                <div className='m-10'>
+                    <MultiDateCalendar/>
                 </div>
             </div>
         </div>

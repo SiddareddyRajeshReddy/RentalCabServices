@@ -189,7 +189,7 @@ function AuthForm() {
 
     return (
         <div className="w-full flex justify-center items-center py-12 bg-gradient-to-br from-red-50 via-pink-50 to-orange-50 min-h-screen">
-            <div className="w-full max-w-md mx-auto px-4">
+            <div className="w-[60%] mx-auto px-4">
                 <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
 
                     {/* Success Message */}

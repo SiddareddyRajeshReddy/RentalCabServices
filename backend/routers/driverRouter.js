@@ -1,22 +1,20 @@
 import express from 'express';
-import driver from '../models/Driver.js'; // Assuming 'Driver' is the correct model name
+import driver from '../models/Driver.js'; 
 import jwt from "jsonwebtoken";
 import User from '../models/User.js';
-import Joi from 'joi'; // For input validation
+import Joi from 'joi';
 
 const driverRouter = express.Router();
 
-// Joi schema for validating registration data
 const registrationSchema = Joi.object({
     carType: Joi.string().required().valid('sedan', 'suv', 'hatchback', 'compact', 'luxury'),
     licenseNumber: Joi.string().required().min(5).max(20),
     idNumber: Joi.string().required().min(5).max(20),
 });
 
-// Middleware to protect routes and extract user info from the token
 const authenticateToken = (req, res, next) => {
     const authHeader = req.headers['authorization'];
-    const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN
+    const token = authHeader
 
     if (token == null) {
         return res.status(401).send({ success: false, message: "Authentication token required." });
@@ -87,11 +85,6 @@ driverRouter.post("/DriverValidate", authenticateToken, async (req, res) => {
         console.error("Database error during driver validation:", dbError);
         res.status(500).send({ success: false, message: "An internal server error occurred." });
     }
-});
-
-// Unnecessary route, better to remove.
-driverRouter.get("/DriverRegistration", (req, res) => {
-    res.status(405).send("Method Not Allowed");
 });
 
 export default driverRouter;
