@@ -1,4 +1,4 @@
-import React, { useState, useEffect,  useContext } from "react"
+import React, { useState, useEffect, useContext } from "react"
 import { Search, Bell, User, Menu, Settings, LogOut, ChevronDown } from 'lucide-react';
 import { useNavigate } from "react-router-dom";
 import { ThemeContext } from "../context/context";
@@ -7,42 +7,43 @@ const ThemedHeader = () => {
     const [notifyOpener, setNotifyOpener] = useState(false)
     const [scrollY, setScrollY] = useState(0)
     const navigate = useNavigate()
-    const {dashboardMode, setDashboardMode} = useContext(ThemeContext)
+    const { dashboardMode, setDashboardMode } = useContext(ThemeContext)
     useEffect(() => {
         const handleScroll = () => {
             setScrollY(window.scrollY)
         }
         window.addEventListener('scroll', handleScroll)
-        return () => window.removeEventListener('scroll', handleScroll)
+        return () => {
+            window.removeEventListener('scroll', handleScroll)
+        };
     }, [])
-    const logOut = () =>{
+    const logOut = () => {
         console.log("hEY")
         localStorage.removeItem("token")
         navigate('/')
     }
     const toggleNotifications = () => {
         setNotifyOpener(!notifyOpener)
-        if(menuOpener)
+        if (menuOpener)
             setMenuOpener(false)
     }
 
     const toggleMenu = () => {
         setMenuOpener(!menuOpener)
-        if(notifyOpener)
+        if (notifyOpener)
             setNotifyOpener(false)
     }
 
     return (
         <>
             {/* Header */}
-            <header className={`fixed border-gray-200 px-4 py-3 top-0 w-full z-40 transition-all duration-300 ${
-                scrollY > 50 ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-white/80 backdrop-blur-sm'
-            }`}>
+            <header className={`fixed border-gray-200 px-4 py-3 top-0 w-full z-40 transition-all duration-300 ${scrollY > 50 ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-white/80 backdrop-blur-sm'
+                }`}>
                 <div className="flex items-center justify-between">
                     {/* Left Section - Logo & Mobile Menu */}
                     <div className="flex items-center space-x-4">
                         {/* Mobile Menu Button */}
-                        <button 
+                        <button
                             className="md:hidden p-2 rounded-lg hover:bg-red-50 transition-colors"
                         >
                             <Menu className="h-5 w-5 text-gray-600" />
@@ -64,17 +65,15 @@ const ThemedHeader = () => {
                     <div className="relative hidden md:flex bg-red-100 rounded-full p-1">
                         <button
                             onClick={() => setDashboardMode('user')}
-                            className={`z-1 px-4 py-2 rounded-full text-sm font-semibold transition-colors duration-300 ${
-                                dashboardMode === 'user' ? ' text-white' : 'text-red-600'
-                            }`}
+                            className={`z-1 px-4 py-2 rounded-full text-sm font-semibold transition-colors duration-300 ${dashboardMode === 'user' ? ' text-white' : 'text-red-600'
+                                }`}
                         >
                             🧑‍💼 Rider Mode
                         </button>
                         <button
                             onClick={() => setDashboardMode('driver')}
-                            className={`z-2 px-4 py-2 rounded-full text-sm font-semibold transition-colors duration-300 ${
-                                dashboardMode === 'driver' ? ' text-white' : 'text-red-600'
-                            }`}
+                            className={`z-2 px-4 py-2 rounded-full text-sm font-semibold transition-colors duration-300 ${dashboardMode === 'driver' ? ' text-white' : 'text-red-600'
+                                }`}
                         >
                             🚗 Driver Mode
                         </button>
@@ -90,8 +89,8 @@ const ThemedHeader = () => {
 
                         {/* Notifications */}
                         <div className="relative">
-                            <button 
-                                onClick={toggleNotifications} 
+                            <button
+                                onClick={toggleNotifications}
                                 className="relative p-2 rounded-lg hover:bg-red-50 transition-colors"
                             >
                                 <Bell className="h-5 w-5 text-gray-600" />
@@ -131,8 +130,8 @@ const ThemedHeader = () => {
 
                         {/* Profile Dropdown */}
                         <div className="relative">
-                            <button 
-                                onClick={toggleMenu} 
+                            <button
+                                onClick={toggleMenu}
                                 className="flex items-center space-x-2 p-2 rounded-lg hover:bg-red-50 transition-colors"
                             >
                                 <div className="w-8 h-8 bg-gradient-to-r from-red-400 to-pink-500 rounded-full flex items-center justify-center">
@@ -179,23 +178,21 @@ const ThemedHeader = () => {
                 <div className="md:hidden mt-3 flex bg-red-100 rounded-full p-1">
                     <button
                         onClick={() => setDashboardMode('user')}
-                        className={`flex-1 py-2 rounded-full text-sm font-semibold transition-colors ${
-                            dashboardMode === 'user' ? 'bg-red-500 text-white' : 'text-red-600'
-                        }`}
+                        className={`flex-1 py-2 rounded-full text-sm font-semibold transition-colors ${dashboardMode === 'user' ? 'bg-red-500 text-white' : 'text-red-600'
+                            }`}
                     >
                         🧑‍💼 Rider
                     </button>
                     <button
                         onClick={() => setDashboardMode('driver')}
-                        className={`flex-1 py-2 rounded-full text-sm font-semibold transition-colors ${
-                            dashboardMode === 'driver' ? 'bg-red-500 text-white' : 'text-red-600'
-                        }`}
+                        className={`flex-1 py-2 rounded-full text-sm font-semibold transition-colors ${dashboardMode === 'driver' ? 'bg-red-500 text-white' : 'text-red-600'
+                            }`}
                     >
                         🚗 Driver
                     </button>
                 </div>
             </header>
-            
+
             {/* Click outside to close dropdowns
             {(menuOpener || notifyOpener) && (
                 <div
@@ -208,7 +205,7 @@ const ThemedHeader = () => {
             )}
              */}
             <div className="h-30 md:h-20"></div>
-        </>
+       </>
     )
 }
 
