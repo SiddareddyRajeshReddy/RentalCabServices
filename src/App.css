@@ -31,3 +31,6 @@
   animation-iteration-count: 1;
   animation-direction: normal;
 }
+::-webkit-scrollbar{
+  display: none;
+}

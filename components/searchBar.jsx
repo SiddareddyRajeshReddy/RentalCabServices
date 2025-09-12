@@ -1,45 +1,120 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useRef } from "react"
 import { Search, MapPin, ArrowUpDown } from 'lucide-react'
 
 const RideSearchBar = () => {
     const [selectedDate, setSelectedDate] = useState('')
+    const [location, setLocation] = useState({
+        latitude: null,
+        longitude: null,
+        error: null
+    });
+    const [isLoading, setIsLoading] = useState(true)
+    const [map, setMap] = useState(null);
+    const mapRef = useRef(null);
 
     useEffect(() => {
-        const map = L.map("map", {
-            center: [27.3516, 88.3239],
-            zoom: 10,
-        });
-        var layer
-      L.tileLayer('https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}', {
-    attribution: '© Google        '
-}).addTo(map)
-        const redIcon = new L.Icon({
-            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
-            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
-            iconSize: [25, 41],
-            iconAnchor: [12, 41],
-            popupAnchor: [1, -34],
-            shadowSize: [41, 41],
-        });
-        map.on('click', function (e) {
-            if (layer) {
-                map.removeLayer(layer);
-            }
-            layer = L.marker(e.latlng, { icon: redIcon }).addTo(map);
-        })
-        return () => {
-            map.remove();
+        if (!navigator.geolocation) {
+            setLocation(prev => ({
+                ...prev,
+                error: 'Geolocation is not supported by your browser.',
+            }));
+            setIsLoading(false);
+            return;
         }
-    })
+
+        const successHandler = (position) => {
+            setLocation({
+                latitude: position.coords.latitude,
+                longitude: position.coords.longitude,
+                error: null,
+            });
+        };
+
+        const errorHandler = (error) => {
+            setLocation(prev => ({
+                ...prev,
+                error: error.message,
+            }));
+            setIsLoading(false);
+        };
+
+        navigator.geolocation.getCurrentPosition(successHandler, errorHandler, {
+            enableHighAccuracy: true,
+            timeout: 100000,
+            maximumAge: 0,
+        });
+    }, []);
+
+    // Set loading to false when location is available
+    useEffect(() => {
+        if (location.latitude && location.longitude) {
+            setIsLoading(false);
+        }
+    }, [location.latitude, location.longitude]);
+
+    // Initialize map only after loading is false and mapRef exists
+    useEffect(() => {
+        if (isLoading || !location.latitude || !location.longitude || !mapRef.current) return;
+        
+        try {
+            const mapInstance = L.map(mapRef.current, {
+                center: [location.latitude, location.longitude],
+                zoom: 10,
+            });
+
+            L.tileLayer('https://mt1.google.com/vt/lyrs=r&x={x}&y={y}&z={z}', {
+                attribution: '© Google'
+            }).addTo(mapInstance);
+
+            const redIcon = new L.Icon({
+                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+                shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+                iconSize: [25, 41],
+                iconAnchor: [12, 41],
+                popupAnchor: [1, -34],
+                shadowSize: [41, 41],
+            });
+
+            let layer = L.marker([location.latitude, location.longitude], { icon: redIcon }).addTo(mapInstance);
+            mapInstance.on('click', function (e) {
+                if (layer) {
+                    mapInstance.removeLayer(layer);
+                }
+                layer = L.marker(e.latlng, { icon: redIcon }).addTo(mapInstance);
+            });
+
+            setMap(mapInstance);
+            
+        } catch (error) {
+            console.error('Map initialization failed:', error);
+            setLocation(prev => ({
+                ...prev,
+                error: 'Failed to initialize map'
+            }));
+        }
+
+    }, [isLoading, location.latitude, location.longitude]);
+
+    // Cleanup map on unmount
+    useEffect(() => {
+        return () => {
+            if (map) {
+                map.remove();
+            }
+        };
+    }, [map]);
+
     // Get current date for min date
     const today = new Date().toISOString().split('T')[0]
 
     const swapLocations = () => {
         const fromInput = document.querySelector('input[placeholder="From"]')
         const toInput = document.querySelector('input[placeholder="To"]')
-        const temp = fromInput.value
-        fromInput.value = toInput.value
-        toInput.value = temp
+        if (fromInput && toInput) {
+            const temp = fromInput.value
+            fromInput.value = toInput.value
+            toInput.value = temp
+        }
     }
 
     return (
@@ -64,7 +139,7 @@ const RideSearchBar = () => {
                                 onClick={swapLocations}
                                 className="p-3 rounded-full bg-red-500 text-white hover:bg-red-600 transition-colors"
                             >
-                                <ArrowUpDown className="w-3 h-3 lg:-rotate-270 transition-all duration-1000 ease-in-out" />
+                                <ArrowUpDown className="w-3 h-3 lg:rotate-90 transition-all duration-300 ease-in-out" />
                             </button>
                         </div>
 
@@ -94,14 +169,41 @@ const RideSearchBar = () => {
                         <Search className="w-4 h-4" />
                         <span>Book Ride</span>
                     </button>
-
                 </div>
             </div>
-            <div className="w-[90vw] h-[30vw] mx-auto">
-                <div id='map' className="w-full h-full rounded-2xl z-0"></div>
-            </div>
+
+            {/* Loading State */}
+            {isLoading && (
+                <div className="flex items-center justify-center min-h-screen bg-gray-100">
+                    <div className="flex space-x-1">
+                        <div className="w-4 h-10 bg-blue-500 rounded animate-pulse"></div>
+                        <div className="w-4 h-10 bg-blue-500 rounded animate-pulse" style={{ animationDelay: '0.1s' }}></div>
+                        <div className="w-4 h-10 bg-blue-500 rounded animate-pulse" style={{ animationDelay: '0.2s' }}></div>
+                        <div className="w-4 h-10 bg-blue-500 rounded animate-pulse" style={{ animationDelay: '0.3s' }}></div>
+                        <div className="w-4 h-10 bg-blue-500 rounded animate-pulse" style={{ animationDelay: '0.4s' }}></div>
+                    </div>
+                </div>
+            )}
+
+            {/* Map Container - Always rendered when not loading */}
+            {!isLoading && !location.error && (
+                <div className="w-[100vw] h-[600px] mx-auto">
+                    <div ref={mapRef} className="w-full h-full rounded-2xl z-0"></div>
+                </div>
+            )}
+
+            {/* Error State */}
+            {location.error && (
+                <div className="mx-4 h-96 bg-red-50 rounded-2xl flex items-center justify-center border border-red-200">
+                    <div className="text-center">
+                        <div className="text-red-500 text-6xl mb-4">⚠️</div>
+                        <p className="text-red-600 font-medium">Location Error</p>
+                        <p className="text-red-500 text-sm mt-2">{location.error}</p>
+                    </div>
+                </div>
+            )}
         </>
     )
 }
 
-export default RideSearchBar    
+export default RideSearchBar
