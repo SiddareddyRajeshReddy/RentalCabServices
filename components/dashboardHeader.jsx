@@ -138,7 +138,7 @@ const ThemedHeader = () => {
                                     <User className="h-4 w-4 text-white" />
                                 </div>
                                 <span className="hidden sm:block text-sm font-medium text-gray-700">
-                                    John Doe
+                                    S R R
                                 </span>
                                 <ChevronDown className="h-4 w-4 text-gray-500" />
                             </button>
@@ -147,8 +147,8 @@ const ThemedHeader = () => {
                             {menuOpener && (
                                 <div className="absolute right-0 mt-2 w-48 bg-white/95 backdrop-blur-md rounded-xl shadow-xl border border-red-100 z-[70]">
                                     <div className="p-3 border-b border-gray-100">
-                                        <p className="font-medium text-gray-800">John Doe</p>
-                                        <p className="text-sm text-gray-500">john@example.com</p>
+                                        <p className="font-medium text-gray-800">S R R</p>
+                                        <p className="text-sm text-gray-500">srr@gmail.com</p>
                                         <p className="text-xs text-red-600 font-semibold">
                                             {dashboardMode === 'driver' ? '⭐ 4.9 Driver Rating' : '🎯 Premium Member'}
                                         </p>
