@@ -514,9 +514,6 @@ const RideSearchBar = () => {
             
             sourceMarker.setLatLng(destPos);
             destinationMarker.setLatLng(sourcePos);
-            
-            // Update route after swapping
-            setTimeout(() => updateRoute(sourceMarker, destinationMarker), 200);
         }
     }
 
