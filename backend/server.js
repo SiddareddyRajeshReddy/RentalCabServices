@@ -3,6 +3,7 @@ import cors from 'cors'
 import router from './routers/AuthRouter.js'
 import connectDB from './config/db.js';
 import driverRouter from './routers/driverRouter.js';
+import bookRides from './routers/bookRides.js';
 const app = express()
 const port = 3000
 connectDB()
@@ -11,6 +12,7 @@ app.use(express.json({ limit: '100mb' }));
 app.use(express.urlencoded({ extended: true, limit: '100mb' })); 
 app.use(router)
 app.use('/driver', driverRouter)
+app.use('/rides',bookRides)
 app.get('/', (req, res)=>{
     res.send('Hello World!')
 })

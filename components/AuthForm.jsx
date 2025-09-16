@@ -199,7 +199,7 @@ function AuthForm() {
                                 <div className={`flex items-center gap-3 ${isLogin?'bg-green-50':'bg-red-200'}`}>
                                     <CheckCircle className="w-5 h-5" />
                                     <span className="font-semibold">
-                                        {isLogin ? 'Login successful!' : 'Account created successfully!'}
+                                        {isLogin ? 'SignUp successful!' : 'Account created successfully!'}
                                     </span>
                                 </div>
                             </div>
